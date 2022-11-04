@@ -1,7 +1,7 @@
 
 using JLD: save, load
-cd("C:\\Users\\bartm\\Documents\\These\\plm\\test")
-#cd("/Data/barth/plm/test")
+#cd("C:\\Users\\bartm\\Documents\\These\\plm\\test")
+cd("/Data/barth/plm/test")
 push!(LOAD_PATH, joinpath(pwd(), "../src"))
 using Revise
 using plm
