@@ -84,8 +84,9 @@ function compute_ranking(S::Matrix{Float64}, min_separation::Int = 5)
     return R
 end
 
-function expandPi(Pi_true)
-    N, _ = size(Pi_true)
+function expandPi(Pi_true,N)
+    # N, _ = size(Pi_true)
+    # @show N
     c = zeros(N,21)
     c[:,1:20] .= transpose(reshape(Pi_true, (20,N)))
     c[:,21].= (1 .-sum(c, dims=2))[:,1]
@@ -94,9 +95,10 @@ function expandPi(Pi_true)
 end
 # c = expandPi(Pi_true)
 
-function expandP(Pi_true, Pij_true)
-    c = expandPi(Pi_true)
-    N,q = size(c)
+function expandP(Pi_true, Pij_true, N)
+    c = expandPi(Pi_true,N)
+    q=21
+    # N,q = size(c)
     ce = reshape(repeat(c, N), (N,N,21))
     a = permutedims(reshape(Pij_true, (20,N,20,N)),(2,1,4,3))
     b = zeros((N,21,N,21))
@@ -113,8 +115,8 @@ function expandP(Pi_true, Pij_true)
     return c, b
 end
 
-function corrCIJ(Pi_true, Pij_true)
-    pie, pije = expandP(Pi_true, Pij_true)
+function corrCIJ(Pi_true, Pij_true,N)
+    pie, pije = expandP(Pi_true, Pij_true,N)
     N,q = size(pie)
     a = reshape(permutedims(pije,(2,1,4,3)), (1113, 1113)) - vec(transpose(pie)) * transpose(vec( transpose(pie)))
     b = permutedims(reshape(a,(21,N,21,N)), (2,1,4,3))

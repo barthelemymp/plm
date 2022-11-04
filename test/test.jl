@@ -1,7 +1,7 @@
 
 using JLD: save, load
-cd("C:\\Users\\bartm\\Documents\\These\\plm\\test")
-
+# cd("C:\\Users\\bartm\\Documents\\These\\plm\\test")
+cd("/Data/barth/plm/test")
 push!(LOAD_PATH, joinpath(pwd(), "../src"))
 using Revise
 using plm
@@ -71,8 +71,8 @@ function main()
         if s%100==0
             Pi_s, Pij_s, _, _ = compute_weighted_frequencies(convert(Array{Int8,2}, plmvarSample.Z), plmvarSample.q, 0)
             # Pi_true, Pij_true, _, _ = compute_weighted_frequencies(convert(Array{Int8,2}, plmvar.Z), plmvarSample.q, :auto)
-            corrij_s = corrCIJ(Pi_s, Pij_s)
-            corrij_true = corrCIJ(Pi_true, Pij_true)
+            corrij_s = corrCIJ(Pi_s, Pij_s, N)
+            corrij_true = corrCIJ(Pi_true, Pij_true, N)
             println(Statistics.cor(vec(corrij_s), vec(corrij_true)))
         end
     end
