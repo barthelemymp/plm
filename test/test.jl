@@ -70,7 +70,7 @@ function main()
     corr_list = []
     x_list = []
 
-    for s =1:1000
+    for s =1:1500
         gibbsstep(plmo, plmvarSample)
         if s%50==0
             Pi_s, Pij_s, _, _ = compute_weighted_frequencies(convert(Array{Int8,2}, plmvarSample.Z), plmvarSample.q, 0)
@@ -87,7 +87,7 @@ function main()
     corr_list2 = []
     x_list2 = []
 
-    for s =1:1000
+    for s =1:1500
         gibbsstep(plmo, plmvarSample)
         if s%50==0
             Pi_s, Pij_s, _, _ = compute_weighted_frequencies(convert(Array{Int8,2}, plmvarSample.Z), plmvarSample.q, 0)
@@ -100,7 +100,7 @@ function main()
     plt = plot(title="corr for lh $(lambdaH) lj $(lambdaJ)")
     plot!(plt,x_list, corr_list, label="Gap Init")
     plot!(plt,x_list, corr_list, label="Data Init")
-    savefig(pfammaping, "../../corr14_lh$(lambdaH)_lj$(lambdaJ).png")
+    savefig(plt, "../../corr14_lh$(lambdaH)_lj$(lambdaJ).png")
 
 
 
