@@ -100,7 +100,7 @@ function main()
     plt = plot(title="corr for lh $(lambdaH) lj $(lambdaJ)")
     plot!(plt,x_list, corr_list, label="Gap Init")
     plot!(plt,x_list, corr_list, label="Data Init")
-    savefig(pfammaping, "../../corr14_lh$(lambdaH)_lj$(lambdaJ).png")
+    savefig(plt, "../../corr14_lh$(lambdaH)_lj$(lambdaJ).png")
 
 
 
