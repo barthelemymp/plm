@@ -66,7 +66,7 @@ function main()
     Pi_s, Pij_s, _, _ = compute_weighted_frequencies(convert(Array{Int8,2}, plmvarSample.Z), plmvarSample.q, 0)
     Pi_true, Pij_true, _, _ = compute_weighted_frequencies(convert(Array{Int8,2}, plmvar.Z), plmvarSample.q, :auto)
     println(Statistics.cor(vec(Pij_s), vec(Pij_true)))
-    for s =1:500
+    for s =1:1000
         gibbsstep(plmo, plmvarSample)
         if s%100==0
             Pi_s, Pij_s, _, _ = compute_weighted_frequencies(convert(Array{Int8,2}, plmvarSample.Z), plmvarSample.q, 0)
