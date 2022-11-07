@@ -70,7 +70,7 @@ function main()
     corr_list = []
     x_list = []
 
-    for s =1:1000
+    for s =1:1500
         gibbsstep(plmo, plmvarSample)
         if s%50==0
             Pi_s, Pij_s, _, _ = compute_weighted_frequencies(convert(Array{Int8,2}, plmvarSample.Z), plmvarSample.q, 0)
