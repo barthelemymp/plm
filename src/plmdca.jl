@@ -425,7 +425,7 @@ end
 
 function gibbsstep(Jmat, plmVar)
     q = plmVar.q
-    for m =1:plmVar.M #Threads
+    @threads for m =1:plmVar.M #Threads
         izm = view(plmVar.IdxZ, :, m)
         site =rand(1:plmVar.N)
         p = get_proba(Jmat, site, izm,plmVar)
