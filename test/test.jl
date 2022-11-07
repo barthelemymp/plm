@@ -8,6 +8,7 @@ using plm
 using Statistics
 using CSV
 using ArgParse
+using Plots
 function parse_commandline()
     s = ArgParseSettings()
     s = ArgParseSettings()
@@ -63,12 +64,15 @@ function main()
         plmvarSample.Z.=21
     end
 
-    Pi_s, Pij_s, _, _ = compute_weighted_frequencies(convert(Array{Int8,2}, plmvarSample.Z), plmvarSample.q, 0)
-    Pi_true, Pij_true, _, _ = compute_weighted_frequencies(convert(Array{Int8,2}, plmvar.Z), plmvarSample.q, :auto)
-    println(Statistics.cor(vec(Pij_s), vec(Pij_true)))
+    # Pi_s, Pij_s, _, _ = compute_weighted_frequencies(convert(Array{Int8,2}, plmvarSample.Z), plmvarSample.q, 0)
+    # Pi_true, Pij_true, _, _ = compute_weighted_frequencies(convert(Array{Int8,2}, plmvar.Z), plmvarSample.q, :auto)
+    # println(Statistics.cor(vec(Pij_s), vec(Pij_true)))
+    corr_list = []
+    x_list = []
+
     for s =1:1000
         gibbsstep(plmo, plmvarSample)
-        if s%100==0
+        if s%50==0
             Pi_s, Pij_s, _, _ = compute_weighted_frequencies(convert(Array{Int8,2}, plmvarSample.Z), plmvarSample.q, 0)
             # Pi_true, Pij_true, _, _ = compute_weighted_frequencies(convert(Array{Int8,2}, plmvar.Z), plmvarSample.q, :auto)
             corrij_s = corrCIJ(Pi_s, Pij_s, N)
@@ -76,6 +80,40 @@ function main()
             println(Statistics.cor(vec(corrij_s), vec(corrij_true)))
         end
     end
+
+
+
+    plmvarSample = PlmVar(N, M*mult, q, q * q, lambdaJ, lambdaH, transpose(repeat(transpose(Z),mult)), repeat(W,mult))
+    corr_list2 = []
+    x_list2 = []
+
+    for s =1:1000
+        gibbsstep(plmo, plmvarSample)
+        if s%50==0
+            Pi_s, Pij_s, _, _ = compute_weighted_frequencies(convert(Array{Int8,2}, plmvarSample.Z), plmvarSample.q, 0)
+            # Pi_true, Pij_true, _, _ = compute_weighted_frequencies(convert(Array{Int8,2}, plmvar.Z), plmvarSample.q, :auto)
+            corrij_s = corrCIJ(Pi_s, Pij_s, N)
+            corrij_true = corrCIJ(Pi_true, Pij_true, N)
+            println(Statistics.cor(vec(corrij_s), vec(corrij_true)))
+        end
+    end
+    plt = plot(title="corr for lh $(lambdaH) lj $(lambdaJ)")
+    plot!(plt,x_list, corr_list, label="Gap Init")
+    plot!(plt,x_list, corr_list, label="Data Init")
+    savefig(pfammaping, "../../corr14_lh$(lambdaH)_lj$(lambdaJ).png")
+
+
+
+
+
+
+
+
+
+
+
+
+
 end
 main()
 

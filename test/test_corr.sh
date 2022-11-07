@@ -7,6 +7,6 @@ do
     for lj in 0.00005 0.0001 0.0005 0.001
     do
         echo "lj $lj lh $lh"
-        julia -t 2 test.jl --lambdaH $lh --lambdaJ $lj --mult 5 --rinit "../data/PF00014.fasta"
+        julia -t 8 test.jl --lambdaH $lh --lambdaJ $lj --mult 5 --rinit "../data/PF00014.fasta"
     done
 done
