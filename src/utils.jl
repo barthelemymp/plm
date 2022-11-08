@@ -132,3 +132,62 @@ function corrCIJ(Pi_true, Pij_true,N)
 
     return c
 end
+
+
+
+
+function parsemut(toparse)
+    smut = split(toparse, "")
+    ina = smut[1]
+    outa = smut[end]
+    site = parse(Int,join(smut[2:end-1]))
+    return ina, outa, site
+end
+
+
+
+
+function pos_clean_dict(npzpath)
+
+    y = npzread(npzpath)
+    d = Dict()
+    count=0
+    for i =1:length(y)
+        if y[i]
+            count+=1
+            d[i] = count
+        else
+            d[i] = -1
+        end
+    end
+    return d
+end
+
+function processCSV(csv, npzpath)
+    posdict = pos_clean_dict(npzpath)
+    todelete = []
+    for mut_id = 1:size(csv)[1]
+        mut = csv[mut_id, :].mutant
+        screenscore = csv[mut_id, :].screenscore
+        ina, outa, site = parsemut(mut)
+        if posdict[site] == -1
+            push!(todelete, mut_id)
+        elseif ismissing(screenscore)
+            push!(todelete, mut_id)
+        else
+            csv[mut_id, :].mutant = ina*string(posdict[site])*outa
+        end
+    end
+    delete!(csv, todelete)
+    return csv
+end
+
+
+function profile(Pi_true, N, pseudocount)
+    pie = expandPi(Pi_true,N)
+    pip = (1-pseudocount).*pie .+(pseudocount/21)
+    fields = log.(pip)
+    proba = exp.(fields)
+    proba .= proba./repeat(sum(proba, dims=2), 1, 21)
+    return fields, proba
+end

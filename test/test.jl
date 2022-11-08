@@ -78,6 +78,8 @@ function main()
             corrij_s = corrCIJ(Pi_s, Pij_s, N)
             corrij_true = corrCIJ(Pi_true, Pij_true, N)
             println(Statistics.cor(vec(corrij_s), vec(corrij_true)))
+            push!(corr_list,Statistics.cor(vec(corrij_s), vec(corrij_true)))
+            push!(x_list, s)
         end
     end
 
@@ -95,6 +97,8 @@ function main()
             corrij_s = corrCIJ(Pi_s, Pij_s, N)
             corrij_true = corrCIJ(Pi_true, Pij_true, N)
             println(Statistics.cor(vec(corrij_s), vec(corrij_true)))
+            push!(corr_list2,Statistics.cor(vec(corrij_s), vec(corrij_true)))
+            push!(x_list2, s)
         end
     end
     plt = plot(title="corr for lh $(lambdaH) lj $(lambdaJ)")
