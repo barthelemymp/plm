@@ -9,7 +9,7 @@ using Statistics
 using CSV
 using ArgParse
 using Plots
-using DataFranes
+using DataFrames
 using CSV
 using NPZ
 using StatsBase
