@@ -2,7 +2,7 @@ using CSV
 using NPZ
 using StatsBase
 using Plots
-ind = 0
+indi = 0
 plt = plot(title="Mutation spearman correlation")
 xticks = (1:9, ["AMIE","B3VI55T","BF520","BLAT","BRCA1","BRCA1BRCT","CALM1","DLG4","HG"])
 
@@ -11,8 +11,8 @@ spplmprof_list = []
 spardca_list = []
 xs = []
 for famname in ["AMIE","B3VI55T","BF520","BLAT","BRCA1","BRCA1BRCT","CALM1","DLG4","HG"]
-    ind+=1
-    push!(xs,ind)
+    indi+=1
+    push!(xs,indi)
     datadir = "/Data/barth/mutdata/"
     alipath = datadir* famname*"/"*"ali"*famname*"_clean.fasta"
     # "../plm/data/CALM/aliCALM1_clean.fasta"
