@@ -1,11 +1,14 @@
 using CSV
+using NPZ
+
 
 
 alipath = "../plm/data/CALM/aliCALM1_clean.fasta"
 wtpath = "../plm/data/CALM/CALM1_clean.fasta"
 mutationpath = "../plm/data/CALM/Roth2017.csv"
+maskpath = "../plm/data/calm1mask.npz.npy"
 csv = DataFrame(CSV.File(mutationpath))
-processCSV(csv, "../plm/data/calm1mask.npz.npy")
+processCSV(csv, maskpath)
 
 theta=:auto
 max_gap_fraction=0.9
