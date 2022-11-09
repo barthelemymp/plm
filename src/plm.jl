@@ -25,5 +25,5 @@ export write_fasta_data,
        DMS_score_plmsite,
        DMS_score_plm,
        DMS_score_plmXprofile,
-       DMS_score_ardca,
+       DMS_score_ardca
 end
