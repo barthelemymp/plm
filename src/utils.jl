@@ -167,8 +167,8 @@ function processCSV(csv, npzpath)
     posdict = pos_clean_dict(npzpath)
     todelete = []
     for mut_id = 1:size(csv)[1]
-        mut = csv[mut_id, :].mutant
-        screenscore = csv[mut_id, :].screenscore
+        mut = csv[mut_id, 2]
+        screenscore = csv[mut_id, 3]
         ina, outa, site = parsemut(mut)
         if posdict[site] == -1
             push!(todelete, mut_id)

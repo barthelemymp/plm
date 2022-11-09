@@ -35,7 +35,7 @@ for famname in ["AMIE","B3VI55T","BF520","BLAT","BRCA1","BRCA1BRCT","CALM1","DLG
     # "../plm/data/CALM/Roth2017.csv"
     maskpath = datadir * famname*"/"* famname*"mask.npz.npy"
     # "../plm/data/calm1mask.npz.npy"
-    csv = DataFrame(CSV.File(mutationpath))
+    csv = DataFrame(CSV.File(mutationpath, delim=";"))
     processCSV(csv, maskpath)
 
     theta=:auto

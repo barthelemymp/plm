@@ -456,8 +456,8 @@ function DMS_score_plmsite(Jmat, plmVar_wt, CSV)
     dmsplmscores = zeros(size(csv)[1])
     dmsexpscores = zeros(size(csv)[1])
     for mut_id = 1:size(csv)[1]
-        mut = csv[mut_id, :].mutant
-        screenscore = csv[mut_id, :].screenscore
+        mut = csv[mut_id, 2]
+        screenscore = csv[mut_id, 3]
         dmsexpscores[mut_id] =  parse(Float64,replace(screenscore, ","=>"."))
         ina, outa, site = parsemut(mut)
         outa = L2N[outa]
@@ -483,8 +483,8 @@ function DMS_score_plm(Jmat, plmVar_wt, CSV)
     dmsplmscores = zeros(size(csv)[1])
     dmsexpscores = zeros(size(csv)[1])
     for mut_id = 1:size(csv)[1]
-        mut = csv[mut_id, :].mutant
-        screenscore = csv[mut_id, :].screenscore
+        mut = csv[mut_id, 2]
+        screenscore = csv[mut_id, 3]
         println(screenscore)
         dmsexpscores[mut_id] = parse(Float64,replace(screenscore, ","=>"."))
         ina, outa, site = parsemut(mut)
@@ -514,8 +514,8 @@ function DMS_score_plmXprofile(Jmat, profile, plmVar_wt, CSV)
     dmsplmscores = zeros(size(csv)[1])
     dmsexpscores = zeros(size(csv)[1])
     for mut_id = 1:size(csv)[1]
-        mut = csv[mut_id, :].mutant
-        screenscore = csv[mut_id, :].screenscore
+        mut = csv[mut_id, 2]
+        screenscore = csv[mut_id, 3]
         dmsexpscores[mut_id] = parse(Float64,replace(screenscore, ","=>"."))
         ina, outa, site = parsemut(mut)
         outa = L2N[outa]
@@ -535,8 +535,8 @@ function DMS_score_ardca(ardms, CSV)
     dmsplmscores = zeros(size(csv)[1])
     dmsexpscores = zeros(size(csv)[1])
     for mut_id = 1:size(csv)[1]
-        mut = csv[mut_id, :].mutant
-        screenscore = csv[mut_id, :].screenscore
+        mut = csv[mut_id, 2]
+        screenscore = csv[mut_id, 3]
         dmsexpscores[mut_id] = parse(Float64,replace(screenscore, ","=>"."))
         ina, outa, site = parsemut(mut)
         outa = L2N[outa]

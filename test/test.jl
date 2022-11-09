@@ -101,9 +101,11 @@ function main()
             push!(x_list2, s)
         end
     end
-    plt = plot(title="corr for lh $(lambdaH) lj $(lambdaJ)")
+    plt = plot(title="corr for lh $(lambdaH) lj $(lambdaJ)",margins = 5Plots.mm)
     plot!(plt,x_list, corr_list, label="Gap Init")
     plot!(plt,x_list2, corr_list2, label="Data Init")
+    xlabel!(plt, "gibsteps")
+    ylabel!(plt, "2pt correlation")
     savefig(plt, "../../corr14_lh$(lambdaH)_lj$(lambdaJ).png")
 
 
