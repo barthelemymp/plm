@@ -60,5 +60,4 @@ for famname in ["AMIE","B3VI55T","BF520","BLAT","BRCA1","BRCA1BRCT","CALM1","DLG
     wtPath_out = path_dir + famname+"/"+ famname+"_clean.fasta"
     file_out = path_dir + famname+"/"+ "ali"+famname+"_clean.fasta"
     masksavepath = path_dir + famname+"/"+ famname+"mask.npz"
-    processfasta(fastaPath, file_out, masksavepath)
-    processfasta(wtPath, wtPath_out, masksavepath)
+    processfasta(fastaPath, file_out,wtPath, wtPath_out, masksavepath)
