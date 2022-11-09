@@ -49,6 +49,7 @@ for famname in ["AMIE","B3VI55T","BF520","BLAT","BRCA1","BRCA1BRCT","CALM1","DLG
     dmsplmscores, dmsexpscores = DMS_score_ardca(ardms, csv)
     spardca = corspearman(dmsplmscores, dmsexpscores)
     push!(spardca_list,spardca)
+    @show spplm, spplmprof, spardca
 end
 scatter!(plt, xs,spplm_list, label="plm")
 scatter!(plt, xs,spplmprof_list, label="plm profile rebalanced")
