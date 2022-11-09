@@ -11,7 +11,7 @@ spplmprof_list = []
 spardca_list = []
 xs = []
 for famname in ["AMIE","B3VI55T","BF520","BLAT","BRCA1","BRCA1BRCT","CALM1","DLG4","HG"]
-    indi+=1
+    global indi+=1
     @show indi
     push!(xs,indi)
     datadir = "/Data/barth/mutdata/"
