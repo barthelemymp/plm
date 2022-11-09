@@ -33,7 +33,7 @@ for famname in ["AMIE","B3VI55T","BF520","BLAT","BRCA1","BRCA1BRCT","CALM1","DLG
     # "../plm/data/CALM/CALM1_clean.fasta"
     mutationpath =  datadir * famname*"/"*"exp"*famname*".csv"
     # "../plm/data/CALM/Roth2017.csv"
-    maskpath = datadir * famname*"/"* famname*"mask.npz"
+    maskpath = datadir * famname*"/"* famname*"mask.npz.npy"
     # "../plm/data/calm1mask.npz.npy"
     csv = DataFrame(CSV.File(mutationpath))
     processCSV(csv, maskpath)
