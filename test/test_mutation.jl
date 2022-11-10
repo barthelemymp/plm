@@ -49,8 +49,6 @@ for famname in ["AMIE","B3VI55T","BF520","BLAT","BRCA1","BRCA1BRCT","CALM1","DLG
 
     plmo = plmdca_asym2(joinpath(pwd(), alipath), theta = :auto, lambdaJ=0.002,lambdaH=0.0001)
 
-<<<<<<< HEAD
-
 
     thetawt = 0.0
     Wwt, Zwt, N, Mwt, q = ReadFasta(wtpath, max_gap_fraction, thetawt, remove_dups)
@@ -58,8 +56,7 @@ for famname in ["AMIE","B3VI55T","BF520","BLAT","BRCA1","BRCA1BRCT","CALM1","DLG
     q=21
 
     plmVar_wt = PlmVar(N, Mwt, q, q * q, lambdaJ, lambdaH, Zwt, Wwt)
-=======
->>>>>>> 215b1ebc8183728615ce87ae0837f5a298d9ee6e
+
     plmscore, dmsplmscores, dmsexpscores = DMS_score_plmsite(plmo, plmVar_wt, CSV)
     _, dmsplmscores, dmsexpscores = DMS_score_plmsite(Jmat, plmVar_wt, CSV)
     spplm = corspearman(dmsplmscores, dmsexpscores)
