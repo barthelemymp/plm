@@ -43,10 +43,12 @@ def processfasta(fastaPath, file_out, wtPath,wtPath_out, masksavepath):
     mdwt = {}
     for records in SeqIO.parse(wtPath,"fasta"):
         names.append(records.id )
+        print(records.seq)
         se = "".join([list(records.seq)[i] for i in range(len(list(records.seq))) if maskMatch[i]])
         mdwt[records.id ] = se
+        print(se)
 
-    write_fasta(mdwt, file_out)
+    write_fasta(mdwt, wtPath_out)
 
 
 
