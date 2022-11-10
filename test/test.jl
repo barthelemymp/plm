@@ -89,9 +89,15 @@ function main()
     corr_list2 = []
     x_list2 = []
 
+<<<<<<< HEAD
     for s =0:1500
         gibbsstep(plmo, plmvarSample)
         if s%25==0
+=======
+    for s =1:1500
+        gibbsstep(plmo, plmvarSample)
+        if s%50==0
+>>>>>>> 215b1ebc8183728615ce87ae0837f5a298d9ee6e
             Pi_s, Pij_s, _, _ = compute_weighted_frequencies(convert(Array{Int8,2}, plmvarSample.Z), plmvarSample.q, 0)
             # Pi_true, Pij_true, _, _ = compute_weighted_frequencies(convert(Array{Int8,2}, plmvar.Z), plmvarSample.q, :auto)
             corrij_s = corrCIJ(Pi_s, Pij_s, N)
