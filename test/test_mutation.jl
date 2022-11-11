@@ -24,14 +24,14 @@ spardca_list = []
 xs = []
 for famname in ["AMIE","B3VI55T","BF520","BLAT","BRCA1","BRCA1BRCT","CALM1","DLG4","HG"]
     global indi+=1
-    @show indi
+    @show indi, famname
     push!(xs,indi)
     datadir = "/Data/barth/mutdata/"
     alipath = datadir* famname*"/"*"ali"*famname*"_clean.fasta"
     # "../plm/data/CALM/aliCALM1_clean.fasta"
     wtpath =  datadir * famname*"/"*famname*"_clean.fasta"
     # "../plm/data/CALM/CALM1_clean.fasta"
-    mutationpath =  datadir * famname*"/"*"exp"*famname*".csv"
+    mutationpath =  datadir * famname*"/"*"exp"*famname*"_clean.csv"
     # "../plm/data/CALM/Roth2017.csv"
     maskpath = datadir * famname*"/"* famname*"mask.npz.npy"
     # "../plm/data/calm1mask.npz.npy"
@@ -47,7 +47,7 @@ for famname in ["AMIE","B3VI55T","BF520","BLAT","BRCA1","BRCA1BRCT","CALM1","DLG
     lambdaH=0.0001
     plmvar = PlmVar(N, M, q, q * q, lambdaJ, lambdaH, Z, W)
 
-    plmo = plmdca_asym2(joinpath(pwd(), alipath), theta = :auto, lambdaJ=0.002,lambdaH=0.0001)
+    # plmo = plmdca_asym2(joinpath(pwd(), alipath), theta = :auto, lambdaJ=0.002,lambdaH=0.0001)
 
 
     thetawt = 0.0
