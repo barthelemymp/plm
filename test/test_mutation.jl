@@ -46,6 +46,7 @@ for famname in ["AMIE","B3VI55T","BF520","BRCA1","BRCA1BRCT","CALM1","DLG4","HG"
     lambdaJ =0.002
     lambdaH=0.0001
     plmvar = PlmVar(N, M, q, q * q, lambdaJ, lambdaH, Z, W)
+    Pi_true, Pij_true, _, _ = compute_weighted_frequencies(convert(Array{Int8,2}, plmvar.Z), q, :auto)
 
     plmo = plmdca_asym2(joinpath(pwd(), alipath), theta = :auto, lambdaJ=0.002,lambdaH=0.0001)
 
