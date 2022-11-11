@@ -453,8 +453,8 @@ function DMS_score_plmsite(Jmat, plmVar_wt, csv)
     for site =1:plmVar_wt.N
         plmscore[:,site] .= get_proba(Jmat, site, izm, plmVar_wt)
     end
-    dmsplmscores = zeros(size(csv)[1])
-    dmsexpscores = zeros(size(csv)[1])
+    dmsplmscores = zeros(nrow(csv))
+    dmsexpscores = zeros(nrow(csv))
     for mut_id = 1:size(csv)[1]
         mut = csv[mut_id, 2]
         screenscore = csv[mut_id, 3]
@@ -480,8 +480,8 @@ function DMS_score_plm(Jmat, plmVar_wt, csv)
         wta = plmVar_wt.Z[site,1]
         wtplm+=plmscore[wta, site]
     end
-    dmsplmscores = zeros(size(csv)[1])
-    dmsexpscores = zeros(size(csv)[1])
+    dmsplmscores = zeros(nrow(csv))
+    dmsexpscores = zeros(nrow(csv))
     for mut_id = 1:size(csv)[1]
         mut = csv[mut_id, 2]
         screenscore = csv[mut_id, 3]
@@ -511,8 +511,8 @@ function DMS_score_plmXprofile(Jmat, profile, plmVar_wt, csv)
         wta = plmVar_wt.Z[site,1]
         wtprofile+=log(profile[site, wta])
     end
-    dmsplmscores = zeros(size(csv)[1])
-    dmsexpscores = zeros(size(csv)[1])
+    dmsplmscores = zeros(nrow(csv))
+    dmsexpscores = zeros(nrow(csv))
     for mut_id = 1:size(csv)[1]
         mut = csv[mut_id, 2]
         screenscore = csv[mut_id, 3]
@@ -532,8 +532,8 @@ function DMS_score_ardca(ardms, csv)
     L2N =  Dict(alphabetL[i] => alphabetN[i] for i =1:21)
     izm = view(plmVar_wt.IdxZ, :, 1)
 
-    dmsplmscores = zeros(size(csv)[1])
-    dmsexpscores = zeros(size(csv)[1])
+    dmsplmscores = zeros(nrow(csv))
+    dmsexpscores = zeros(nrow(csv))
     for mut_id = 1:size(csv)[1]
         mut = csv[mut_id, 2]
         screenscore = csv[mut_id, 3]
