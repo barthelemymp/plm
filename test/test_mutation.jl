@@ -22,7 +22,7 @@ spplm_list = []
 spplmprof_list = []
 spardca_list = []
 xs = []
-for famname in ["AMIE","B3VI55T","BF520","BLAT","BRCA1","BRCA1BRCT","CALM1","DLG4","HG"]
+for famname in ["AMIE","B3VI55T","BF520","BRCA1","BRCA1BRCT","CALM1","DLG4","HG"]#"BLAT"
     global indi+=1
     @show indi, famname
     push!(xs,indi)
@@ -47,7 +47,7 @@ for famname in ["AMIE","B3VI55T","BF520","BLAT","BRCA1","BRCA1BRCT","CALM1","DLG
     lambdaH=0.0001
     plmvar = PlmVar(N, M, q, q * q, lambdaJ, lambdaH, Z, W)
 
-    # plmo = plmdca_asym2(joinpath(pwd(), alipath), theta = :auto, lambdaJ=0.002,lambdaH=0.0001)
+    plmo = plmdca_asym2(joinpath(pwd(), alipath), theta = :auto, lambdaJ=0.002,lambdaH=0.0001)
 
 
     thetawt = 0.0
