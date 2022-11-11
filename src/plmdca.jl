@@ -526,7 +526,7 @@ function DMS_score_plmXprofile(Jmat, profile, plmVar_wt, csv)
         ina, outa, site = parsemut(mut)
         outa = L2N[outa]
         wta = plmVar_wt.Z[site,1]
-        dmsplmscores[mut_id] = log(plmscore[outa, site]) + log(wtprofile) - log(profile[site, wta])
+        dmsplmscores[mut_id] = log(plmscore[outa, site]) - log(profile[site, wta])
     end
     return plmscore, dmsplmscores, dmsexpscores
 end
