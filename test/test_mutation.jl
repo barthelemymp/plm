@@ -58,7 +58,6 @@ for famname in ["AMIE","B3VI55T","BF520","BRCA1","BRCA1BRCT","CALM1","DLG4","HG"
     plmVar_wt = PlmVar(N, Mwt, q, q * q, lambdaJ, lambdaH, Zwt, Wwt)
 
     plmscore, dmsplmscores, dmsexpscores = DMS_score_plmsite(plmo, plmVar_wt, csv)
-    _, dmsplmscores, dmsexpscores = DMS_score_plmsite(Jmat, plmVar_wt, csv)
     spplm = corspearman(dmsplmscores, dmsexpscores)
     push!(spplm_list,spplm)
     _, prof = profile(Pi_true, N, 0.05)
