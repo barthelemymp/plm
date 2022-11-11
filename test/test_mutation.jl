@@ -7,6 +7,7 @@ using Revise
 using plm
 using Statistics
 using CSV
+using ArDCA
 using ArgParse
 using Plots
 using DataFrames
