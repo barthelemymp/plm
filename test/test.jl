@@ -89,15 +89,11 @@ function main()
     corr_list2 = []
     x_list2 = []
 
-<<<<<<< HEAD
+
     for s =0:1500
         gibbsstep(plmo, plmvarSample)
         if s%25==0
-=======
-    for s =1:1500
-        gibbsstep(plmo, plmvarSample)
-        if s%50==0
->>>>>>> 215b1ebc8183728615ce87ae0837f5a298d9ee6e
+
             Pi_s, Pij_s, _, _ = compute_weighted_frequencies(convert(Array{Int8,2}, plmvarSample.Z), plmvarSample.q, 0)
             # Pi_true, Pij_true, _, _ = compute_weighted_frequencies(convert(Array{Int8,2}, plmvar.Z), plmvarSample.q, :auto)
             corrij_s = corrCIJ(Pi_s, Pij_s, N)
@@ -108,6 +104,8 @@ function main()
         end
     end
     plt = plot(title="corr for lh $(lambdaH) lj $(lambdaJ)",margins = 5Plots.mm)
+    ylims!((0.0,1.0))
+    xlims!((0,1500))
     plot!(plt,x_list, corr_list, label="Gap Init")
     plot!(plt,x_list2, corr_list2, label="Data Init")
     xlabel!(plt, "gibsteps")
