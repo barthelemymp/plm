@@ -26,7 +26,7 @@ xs = []
 startposlist = [1     ,1         ,25    ,1      ,1625       ,1      ,300   ,1]
 for famname in ["AMIE","B3VI55T","BF520","BRCA1","BRCA1BRCT","CALM1","DLG4","HG"]#"BLAT"
     global indi+=1
-    startpos = startposlist[i]
+    startpos = startposlist[indi]
     @show indi, famname
     push!(xs,indi)
     datadir = "/Data/barth/mutdata/"
