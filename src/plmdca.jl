@@ -536,7 +536,7 @@ function DMS_score_ardca(ardms, csv)
     alphabetN = [ 1,   2,   3,   4,   5,   6,   7,   8,   9,   10,  11,  12,  13, 14,  15,  16,  17,  18,  19,  20, 21]
     alphabetL=  ["A", "C", "D", "E", "F", "G", "H", "I", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "V", "W", "Y", "-"]
     L2N =  Dict(alphabetL[i] => alphabetN[i] for i =1:21)
-    izm = view(plmVar_wt.IdxZ, :, 1)
+    # izm = view(plmVar_wt.IdxZ, :, 1)
 
     dmsplmscores = zeros(nrow(csv))
     dmsexpscores = zeros(nrow(csv))
