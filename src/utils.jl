@@ -163,13 +163,14 @@ function pos_clean_dict(npzpath)
     return d
 end
 
-function processCSV(csv, npzpath)
+function processCSV(csv, npzpath, startpos)
     posdict = pos_clean_dict(npzpath)
     todelete = []
     for mut_id = 1:size(csv)[1]
         mut = csv[mut_id, 2]
         screenscore = csv[mut_id, 3]
         ina, outa, site = parsemut(mut)
+        site = site - startpos +1
         if posdict[site] == -1
             push!(todelete, mut_id)
         elseif ismissing(screenscore)

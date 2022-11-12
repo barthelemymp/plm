@@ -17,14 +17,16 @@ using StatsBase
 using Plots
 global indi = 0
 plt = plot(title="Mutation spearman correlation")
-xticks = (1:9, ["AMIE","B3VI55T","BF520","BLAT","BRCA1","BRCA1BRCT","CALM1","DLG4","HG"])
+xticks = (1:9, ["AMIE","B3VI55T","BF520","BRCA1","BRCA1BRCT","CALM1","DLG4","HG"])
 
 spplm_list = []
 spplmprof_list = []
 spardca_list = []
 xs = []
+startposlist = [1     ,1         ,25    ,1      ,1625       ,1      ,300   ,1]
 for famname in ["AMIE","B3VI55T","BF520","BRCA1","BRCA1BRCT","CALM1","DLG4","HG"]#"BLAT"
     global indi+=1
+    startpos = startposlist[i]
     @show indi, famname
     push!(xs,indi)
     datadir = "/Data/barth/mutdata/"
@@ -37,7 +39,7 @@ for famname in ["AMIE","B3VI55T","BF520","BRCA1","BRCA1BRCT","CALM1","DLG4","HG"
     maskpath = datadir * famname*"/"* famname*"mask.npz.npy"
     # "../plm/data/calm1mask.npz.npy"
     csv = DataFrame(CSV.File(mutationpath, delim=";"))
-    processCSV(csv, maskpath)
+    processCSV(csv, maskpath, startpos)
 
     theta=:auto
     max_gap_fraction=0.9
@@ -69,7 +71,7 @@ for famname in ["AMIE","B3VI55T","BF520","BRCA1","BRCA1BRCT","CALM1","DLG4","HG"
     arnet,arvar=ardca(alipath, verbose=false, lambdaJ=0.002,lambdaH=0.0001; permorder=:NATURAL)
     ardms = dms_single_site(arnet, arvar, 1)[1]
     dmsplmscores, dmsexpscores = DMS_score_ardca(ardms, csv)
-    spardca = corspearman(dmsplmscores, dmsexpscores)
+    spardca =-1* corspearman(dmsplmscores, dmsexpscores)
     push!(spardca_list,spardca)
     @show spplm, spplmprof, spardca
 end
