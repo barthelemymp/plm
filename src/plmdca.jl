@@ -495,10 +495,10 @@ function DMS_score_plm(Jmat, plmVar_wt, csv)
         plmVar_wt_mut.IdxZ[site,1] =  (site-1) * q2 + q * (outa- 1)
         izm_mut = view(plmVar_wt_mut.IdxZ, :, 1)
         for po = 1:plmVar_wt.N
-            dmsplmscores[mut_id]+=get_proba(Jmat, po, izm_mut, plmVar_wt_mut)[plmVar_wt_mut.Z[po,1]]
+            dmsplmscores[mut_id]+=log(get_proba(Jmat, po, izm_mut, plmVar_wt_mut)[plmVar_wt_mut.Z[po,1]])
         end
     end
-    return plmscore, dmsplmscores, dmsexpscores
+    return  dmsplmscores, dmsexpscores
 end
 
 

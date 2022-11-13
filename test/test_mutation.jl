@@ -20,6 +20,7 @@ plt = plot(title="Mutation spearman correlation")
 xticks = (1:9, ["AMIE","B3VI55T","BF520","BRCA1","BRCA1BRCT","CALM1","DLG4","HG"])
 
 spplm_list = []
+spplm_full_list = []
 spplmprof_list = []
 spardca_list = []
 xs = []
@@ -46,7 +47,7 @@ for famname in ["AMIE","B3VI55T","BF520","BRCA1","BRCA1BRCT","CALM1","DLG4","HG"
     remove_dups=true
     time = @elapsed W, Z, N, M, q = ReadFasta(alipath, max_gap_fraction, theta, remove_dups)
 
-    lambdaJ =0.002
+    lambdaJ =0.01
     lambdaH=0.0001
     plmvar = PlmVar(N, M, q, q * q, lambdaJ, lambdaH, Z, W)
     Pi_true, Pij_true, _, _ = compute_weighted_frequencies(convert(Array{Int8,2}, plmvar.Z), q, :auto)
@@ -64,18 +65,26 @@ for famname in ["AMIE","B3VI55T","BF520","BRCA1","BRCA1BRCT","CALM1","DLG4","HG"
     plmscore, dmsplmscores, dmsexpscores = DMS_score_plmsite(plmo, plmVar_wt, csv)
     spplm = corspearman(dmsplmscores, dmsexpscores)
     push!(spplm_list,spplm)
+
+    dmsplmscores, dmsexpscores = DMS_score_plm(plmo, plmVar_wt, csv)
+    spplm_full = corspearman(dmsplmscores, dmsexpscores)
+    push!(spplm_full_list,spplm_full)
+
+
     _, prof = profile(Pi_true, N, 0.05)
     _, dmsplmscores, dmsexpscores = DMS_score_plmXprofile(plmo, prof, plmVar_wt, csv)
     spplmprof = corspearman(dmsplmscores, dmsexpscores)
     push!(spplmprof_list,spplmprof)
-    arnet,arvar=ardca(alipath, verbose=false, lambdaJ=0.002,lambdaH=0.0001; permorder=:NATURAL)
+    arnet,arvar=ardca(alipath, verbose=false, lambdaJ=0.01,lambdaH=0.0001; permorder=:NATURAL)
     ardms = dms_single_site(arnet, arvar, 1)[1]
     dmsplmscores, dmsexpscores = DMS_score_ardca(ardms, csv)
     spardca =-1* corspearman(dmsplmscores, dmsexpscores)
     push!(spardca_list,spardca)
     @show spplm, spplmprof, spardca
 end
-scatter!(plt, xs,spplm_list, label="plm")
+
+scatter!(plt, xs,spplm_list, label="cond_plm")
+scatter!(plt, xs,spplm_full_list, label="plm")
 scatter!(plt, xs,spplmprof_list, label="plm profile rebalanced")
 scatter!(plt, xs,spardca_list, label="ardca")
 xticks!(plt, xticks)
