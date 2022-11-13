@@ -492,7 +492,7 @@ function DMS_score_plm(Jmat, plmVar_wt, csv)
         wta = plmVar_wt.Z[site,1]
         plmVar_wt_mut = deepcopy(plmVar_wt)
         plmVar_wt_mut.Z[site,1] = outa
-        plmVar_wt_mut.IdxZ[site,1] =  (site-1) * q*q + q * (outa- 1)
+        plmVar_wt_mut.IdxZ[site,1] =  (site-1) * plmVar_wt.q*plmVar_wt.q + plmVar_wt.q * (outa- 1)
         izm_mut = view(plmVar_wt_mut.IdxZ, :, 1)
         for po = 1:plmVar_wt.N
             dmsplmscores[mut_id]+=log(get_proba(Jmat, po, izm_mut, plmVar_wt_mut)[plmVar_wt_mut.Z[po,1]])
