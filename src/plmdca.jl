@@ -485,7 +485,7 @@ function DMS_score_plm(Jmat, plmVar_wt, csv)
     for mut_id = 1:size(csv)[1]
         mut = csv[mut_id, 2]
         screenscore = csv[mut_id, 3]
-        println(screenscore)
+        # println(screenscore)
         dmsexpscores[mut_id] = parse(Float64,replace(screenscore, ","=>"."))
         ina, outa, site = parsemut(mut)
         outa = L2N[outa]
