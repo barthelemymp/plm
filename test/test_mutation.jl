@@ -53,7 +53,7 @@ for famname in ["AMIE","B3VI55T","BF520","BRCA1","BRCA1BRCT","CALM1","DLG4","HG"
     lambdaH = 0.000001
     plmvar = PlmVar(N, M, q, q * q, lambdaJ, lambdaH, Z, W)
     Pi_true, Pij_true, _, _ = compute_weighted_frequencies(convert(Array{Int8,2}, plmvar.Z), q, :auto)
-    
+
 
     plmo = plmdca_asym2(joinpath(pwd(), alipath), theta = :auto,verbose=false, lambdaJ=lambdaJ,lambdaH=lambdaH)
     Pi_true, Pij_true, _, _ = compute_weighted_frequencies(convert(Array{Int8,2}, plmvar.Z), plmvarSample.q, :auto)
@@ -135,10 +135,10 @@ for famname in ["AMIE","B3VI55T","BF520","BRCA1","BRCA1BRCT","CALM1","DLG4","HG"
     # @show spplm, spplmprof, spardca
 end
 
-scatter!(plt, xs,spplm_list, label="cond_plm")
-scatter!(plt, xs,spplm_full_list, label="plm")
-scatter!(plt, xs,spplmprof_list, label="plm profile rebalanced")
-scatter!(plt, xs,spardca_list, label="ardca")
-xticks!(plt, xticks)
-
-savefig(plt, "../../mut.png")
+# scatter!(plt, xs,spplm_list, label="cond_plm")
+# scatter!(plt, xs,spplm_full_list, label="plm")
+# scatter!(plt, xs,spplmprof_list, label="plm profile rebalanced")
+# scatter!(plt, xs,spardca_list, label="ardca")
+# xticks!(plt, xticks)
+#
+# savefig(plt, "../../mut.png")
