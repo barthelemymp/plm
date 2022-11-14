@@ -25,7 +25,7 @@ spplmprof_list = []
 spardca_list = []
 xs = []
 startposlist = [1     ,1         ,25    ,1      ,1625       ,1      ,300   ,1]
-multss = []
+# multss = []
 for famname in ["AMIE","B3VI55T","BF520","BRCA1","BRCA1BRCT","CALM1","DLG4","HG"]#"BLAT"
     global indi+=1
     startpos = startposlist[indi]
@@ -61,7 +61,7 @@ for famname in ["AMIE","B3VI55T","BF520","BRCA1","BRCA1BRCT","CALM1","DLG4","HG"
 
 
 
-    mult = multss[i]
+    mult =2# multss[i]
     plmvarSample = PlmVar(N, M*mult, q, q * q, lambdaJ, lambdaH, transpose(repeat(transpose(Z),mult)), repeat(W,mult))
     corr_list2 = []
     x_list2 = []
