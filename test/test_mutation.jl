@@ -83,7 +83,6 @@ for famname in ["BRCA1","B3VI55T","BF520","AMIE","BRCA1BRCT","CALM1","DLG4","HG"
     plt = plot(title="$famname corr for lh $(lambdaH) lj $(lambdaJ)",margins = 5Plots.mm)
     ylims!((0.0,1.0))
     xlims!((0,1500))
-    plot!(plt, x_list, corr_list, label="Gap Init")
     plot!(plt, x_list2, corr_list2, label="Data Init")
     xlabel!(plt, "gibsteps")
     ylabel!(plt, "2pt correlation")
