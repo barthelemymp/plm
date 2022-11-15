@@ -118,7 +118,7 @@ end
 function corrCIJ(Pi_true, Pij_true,N)
     pie, pije = expandP(Pi_true, Pij_true,N)
     N,q = size(pie)
-    a = reshape(permutedims(pije,(2,1,4,3)), (1113, 1113)) - vec(transpose(pie)) * transpose(vec( transpose(pie)))
+    a = reshape(permutedims(pije,(2,1,4,3)), (N*q, N*q)) - vec(transpose(pie)) * transpose(vec( transpose(pie)))
     b = permutedims(reshape(a,(21,N,21,N)), (2,1,4,3))
 
     c = vec([])
