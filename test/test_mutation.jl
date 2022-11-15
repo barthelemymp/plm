@@ -56,7 +56,7 @@ for famname in ["AMIE","B3VI55T","BF520","BRCA1","BRCA1BRCT","CALM1","DLG4","HG"
 
 
     plmo = plmdca_asym2(joinpath(pwd(), alipath), theta = :auto,verbose=false, lambdaJ=lambdaJ,lambdaH=lambdaH)
-    Pi_true, Pij_true, _, _ = compute_weighted_frequencies(convert(Array{Int8,2}, plmvar.Z), plmvar.q, :auto)
+    # Pi_true, Pij_true, _, _ = compute_weighted_frequencies(convert(Array{Int8,2}, plmvar.Z), plmvar.q, :auto)
     pitrue, pijtrue = expandP(Pi_true, Pij_true,N)
 
 
@@ -77,32 +77,35 @@ for famname in ["AMIE","B3VI55T","BF520","BRCA1","BRCA1BRCT","CALM1","DLG4","HG"
         end
     end
     pis, pijs = expandP(Pi_s, Pij_s,N)
+    Pi_s, Pij_s, _, _ = compute_weighted_frequencies(convert(Array{Int8,2}, plmvarSample.Z), plmvarSample.q, 0)
+    corrij_s = corrCIJ(Pi_s, Pij_s, N)
+    corrij_true = corrCIJ(Pi_true, Pij_true, N)
     plt = plot(title="$famname corr for lh $(lambdaH) lj $(lambdaJ)",margins = 5Plots.mm)
     ylims!((0.0,1.0))
     xlims!((0,1500))
-    plot!(plt,x_list, corr_list, label="Gap Init")
-    plot!(plt,x_list2, corr_list2, label="Data Init")
+    plot!(plt, x_list, corr_list, label="Gap Init")
+    plot!(plt, x_list2, corr_list2, label="Data Init")
     xlabel!(plt, "gibsteps")
     ylabel!(plt, "2pt correlation")
     savefig(plt, "../../$(famname)corr_lh$(lambdaH)_lj$(lambdaJ).png")
 
     plt2 = plot(title="$famname corr for lh $(lambdaH) lj $(lambdaJ)",margins = 5Plots.mm)
-    scatter!(plt2, vex(corrij_true), vec(corrij_s))
+    scatter!(plt2, vec(corrij_true), vec(corrij_s))
     xlabel!(plt2, "2pt corr True")
     ylabel!(plt2, "2pt corr Sample")
-    savefig(plt, "../../$(famname)corrScatter_lh$(lambdaH)_lj$(lambdaJ).png")
+    savefig(plt2, "../../$(famname)corrScatter_lh$(lambdaH)_lj$(lambdaJ).png")
 
-    plt3 = plot(title="$famname pij for lh $(lambdaH) lj $(lambdaJ)",margins = 5Plots.mm)
-    scatter!(plt2, vex(pitrue), vec(pis))
-    xlabel!(plt2, "2pt corr True")
-    ylabel!(plt2, "2pt corr Sample")
-    savefig(plt, "../../$(famname)f1Scatter_lh$(lambdaH)_lj$(lambdaJ).png")
+    plt3 = plot(title="$famname pi for lh $(lambdaH) lj $(lambdaJ)",margins = 5Plots.mm)
+    scatter!(plt3, vec(pitrue), vec(pis))
+    xlabel!(plt3, "fij True")
+    ylabel!(plt3, "fij corr Sample")
+    savefig(plt3, "../../$(famname)f1Scatter_lh$(lambdaH)_lj$(lambdaJ).png")
 
-    plt4 = plot(title="$famname pi for lh $(lambdaH) lj $(lambdaJ)",margins = 5Plots.mm)
-    scatter!(plt2, vex(pijtrue), vec(pijs))
-    xlabel!(plt2, "2pt corr True")
-    ylabel!(plt2, "2pt corr Sample")
-    savefig(plt, "../../$(famname)f2Scatter_lh$(lambdaH)_lj$(lambdaJ).png")
+    plt4 = plot(title="$famname pij for lh $(lambdaH) lj $(lambdaJ)",margins = 5Plots.mm)
+    scatter!(plt4, vec(pijtrue), vec(pijs))
+    xlabel!(plt4, "fi True")
+    ylabel!(plt4, "fi Sample")
+    savefig(plt4, "../../$(famname)f2Scatter_lh$(lambdaH)_lj$(lambdaJ).png")
 
 
 
