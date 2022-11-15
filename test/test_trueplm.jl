@@ -1,6 +1,31 @@
 
 using JLD: save, load
-#cd("C:\\Users\\bartm\\Documents\\These\\plm\\test")
+
+cd("/home/bart/Documents/replicated_boltzmann/test")
+
+push!(LOAD_PATH, joinpath(pwd(), "../src"))
+using Revise
+using ReplicatedBoltzmann
+cd("/home/bart/Documents/robustalignment")
+#cd("/home/meynard/Documents/robustalignment")
+# cd("/home/bart/Documents/replicated_boltzmann/test")
+push!(LOAD_PATH, joinpath(pwd(), "src"))
+using RobustAlignment
+using Plots
+using JLD: save, load
+using Random
+using FastaIO: writefasta, readfasta
+using PlmDCA
+using PdbTool
+using Distributed
+using StatsBase
+using Distributions
+using ArDCA
+using ExtractMacro: @extract
+using DCAUtils
+using Base.Threads: @threads, nthreads
+
+
 cd("/Data/barth/plm/test")
 push!(LOAD_PATH, joinpath(pwd(), "../src"))
 using Revise
@@ -25,7 +50,7 @@ spplmprof_list = []
 spardca_list = []
 xs = []
 startposlist = [1     ,1         ,25    ,1      ,1625       ,1      ,300   ,1]
-# multss = []
+multss = []
 for famname in ["AMIE","B3VI55T","BF520","BRCA1","BRCA1BRCT","CALM1","DLG4","HG"]#"BLAT"
     global indi+=1
     startpos = startposlist[indi]
@@ -55,13 +80,24 @@ for famname in ["AMIE","B3VI55T","BF520","BRCA1","BRCA1BRCT","CALM1","DLG4","HG"
     Pi_true, Pij_true, _, _ = compute_weighted_frequencies(convert(Array{Int8,2}, plmvar.Z), q, :auto)
 
 
-    plmo = plmdca_asym2(joinpath(pwd(), alipath), theta = :auto,verbose=false, lambdaJ=lambdaJ,lambdaH=lambdaH)
-    Pi_true, Pij_true, _, _ = compute_weighted_frequencies(convert(Array{Int8,2}, plmvar.Z), plmvar.q, :auto)
-    pitrue, pijtrue = expandP(Pi_true, Pij_true,N)
+    mypottsplm = PottsModel(AlignmentTest.sequence_length)
+    plmo = plmdca_asym(joinpath(pwd(), "tmp/$(familyName)_$i.fasta"), theta = :auto)
+    plm_couplings = deflate_matrix(plmo.Jtensor)
+    plm_fields = plmo.htensor
+    mypottsplm.fields .= plm_fields
+    mypottsplm.couplings .= plm_couplings
+    energies = energy(mypottsplm, AlignmentTest)
+    spearmanerror = eval_spearman(mypottsplm, AlignmentTest)
+
+
+    # 
+    # plmo = plmdca_asym2(joinpath(pwd(), alipath), theta = :auto,verbose=false, lambdaJ=lambdaJ,lambdaH=lambdaH)
+    # Pi_true, Pij_true, _, _ = compute_weighted_frequencies(convert(Array{Int8,2}, plmvar.Z), plmvarSample.q, :auto)
+    # pitrue, pijtrue = expandP(Pi_true, Pij_true,N)
 
 
 
-    mult =2# multss[i]
+    mult = multss[i]
     plmvarSample = PlmVar(N, M*mult, q, q * q, lambdaJ, lambdaH, transpose(repeat(transpose(Z),mult)), repeat(W,mult))
     corr_list2 = []
     x_list2 = []
@@ -135,10 +171,10 @@ for famname in ["AMIE","B3VI55T","BF520","BRCA1","BRCA1BRCT","CALM1","DLG4","HG"
     # @show spplm, spplmprof, spardca
 end
 
-# scatter!(plt, xs,spplm_list, label="cond_plm")
-# scatter!(plt, xs,spplm_full_list, label="plm")
-# scatter!(plt, xs,spplmprof_list, label="plm profile rebalanced")
-# scatter!(plt, xs,spardca_list, label="ardca")
-# xticks!(plt, xticks)
-#
-# savefig(plt, "../../mut.png")
+scatter!(plt, xs,spplm_list, label="cond_plm")
+scatter!(plt, xs,spplm_full_list, label="plm")
+scatter!(plt, xs,spplmprof_list, label="plm profile rebalanced")
+scatter!(plt, xs,spardca_list, label="ardca")
+xticks!(plt, xticks)
+
+savefig(plt, "../../mut.png")
