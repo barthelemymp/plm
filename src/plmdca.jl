@@ -442,9 +442,101 @@ function gibbsstep(Jmat, plmVar)
 end
 
 
+#
+#
+# function DMS_score_plmsite(Jmat, plmVar_wt, csv)
+#     alphabetN = [ 1,   2,   3,   4,   5,   6,   7,   8,   9,   10,  11,  12,  13, 14,  15,  16,  17,  18,  19,  20, 21]
+#     alphabetL=  ["A", "C", "D", "E", "F", "G", "H", "I", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "V", "W", "Y", "-"]
+#     L2N =  Dict(alphabetL[i] => alphabetN[i] for i =1:21)
+#     izm = view(plmVar_wt.IdxZ, :, 1)
+#     plmscore = zeros(plmVar_wt.q, plmVar_wt.N)
+#     for site =1:plmVar_wt.N
+#         plmscore[:,site] .= get_proba(Jmat, site, izm, plmVar_wt)
+#     end
+#     dmsplmscores = zeros(nrow(csv))
+#     dmsexpscores = zeros(nrow(csv))
+#     for mut_id = 1:size(csv)[1]
+#         mut = csv[mut_id, 2]
+#         screenscore = csv[mut_id, 3]
+#         dmsexpscores[mut_id] =  parse(Float64,replace(screenscore, ","=>"."))
+#         ina, outa, site = parsemut(mut)
+#         outa = L2N[outa]
+#         dmsplmscores[mut_id] = plmscore[outa, site]
+#     end
+#     return plmscore, dmsplmscores, dmsexpscores
+# end
+#
+# function DMS_score_plm(Jmat, plmVar_wt, csv)
+#     alphabetN = [ 1,   2,   3,   4,   5,   6,   7,   8,   9,   10,  11,  12,  13, 14,  15,  16,  17,  18,  19,  20, 21]
+#     alphabetL=  ["A", "C", "D", "E", "F", "G", "H", "I", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "V", "W", "Y", "-"]
+#     L2N =  Dict(alphabetL[i] => alphabetN[i] for i =1:21)
+#     izm = view(plmVar_wt.IdxZ, :, 1)
+#     plmscore = zeros(plmVar_wt.q, plmVar_wt.N)
+#     for site =1:plmVar_wt.N
+#         plmscore[:,site] .= get_proba(Jmat, site, izm, plmVar_wt)
+#     end
+#     wtplm = 0.0
+#     for site =1:plmVar_wt.N
+#         wta = plmVar_wt.Z[site,1]
+#         wtplm+=plmscore[wta, site]
+#     end
+#     dmsplmscores = zeros(nrow(csv))
+#     dmsexpscores = zeros(nrow(csv))
+#     for mut_id = 1:size(csv)[1]
+#         mut = csv[mut_id, 2]
+#         screenscore = csv[mut_id, 3]
+#         # println(screenscore)
+#         dmsexpscores[mut_id] = parse(Float64,replace(screenscore, ","=>"."))
+#         ina, outa, site = parsemut(mut)
+#         outa = L2N[outa]
+#         wta = plmVar_wt.Z[site,1]
+#         plmVar_wt_mut = deepcopy(plmVar_wt)
+#         plmVar_wt_mut.Z[site,1] = outa
+#         plmVar_wt_mut.IdxZ[site,1] =  (site-1) * plmVar_wt.q*plmVar_wt.q + plmVar_wt.q * (outa- 1)
+#         izm_mut = view(plmVar_wt_mut.IdxZ, :, 1)
+#         for po = 1:plmVar_wt.N
+#             dmsplmscores[mut_id]+=log(get_proba(Jmat, po, izm_mut, plmVar_wt_mut)[plmVar_wt_mut.Z[po,1]])
+#         end
+#     end
+#     return  dmsplmscores, dmsexpscores
+# end
+#
+#
+#
+# function DMS_score_plmXprofile(Jmat, profile, plmVar_wt, csv)
+#     alphabetN = [ 1,   2,   3,   4,   5,   6,   7,   8,   9,   10,  11,  12,  13, 14,  15,  16,  17,  18,  19,  20, 21]
+#     alphabetL=  ["A", "C", "D", "E", "F", "G", "H", "I", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "V", "W", "Y", "-"]
+#     L2N =  Dict(alphabetL[i] => alphabetN[i] for i =1:21)
+#     izm = view(plmVar_wt.IdxZ, :, 1)
+#     plmscore = zeros(plmVar_wt.q, plmVar_wt.N)
+#     for site =1:plmVar_wt.N
+#         plmscore[:,site] .= get_proba(Jmat, site, izm, plmVar_wt)
+#     end
+#     wtprofile = 0.0
+#     for site =1:plmVar_wt.N
+#         wta = plmVar_wt.Z[site,1]
+#         wtprofile+=log(profile[site, wta])
+#     end
+#     dmsplmscores = zeros(nrow(csv))
+#     dmsexpscores = zeros(nrow(csv))
+#     for mut_id = 1:size(csv)[1]
+#         mut = csv[mut_id, 2]
+#         screenscore = csv[mut_id, 3]
+#         dmsexpscores[mut_id] = parse(Float64,replace(screenscore, ","=>"."))
+#         ina, outa, site = parsemut(mut)
+#         outa = L2N[outa]
+#         wta = plmVar_wt.Z[site,1]
+#         dmsplmscores[mut_id] = log(plmscore[outa, site]) - log(profile[site, wta])
+#     end
+#     return plmscore, dmsplmscores, dmsexpscores
+# end
 
 
-function DMS_score_plmsite(Jmat, plmVar_wt, csv)
+
+
+
+
+function DMS_score_plmsite(Jmat,plmVar_wt, mutations, fitness)
     alphabetN = [ 1,   2,   3,   4,   5,   6,   7,   8,   9,   10,  11,  12,  13, 14,  15,  16,  17,  18,  19,  20, 21]
     alphabetL=  ["A", "C", "D", "E", "F", "G", "H", "I", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "V", "W", "Y", "-"]
     L2N =  Dict(alphabetL[i] => alphabetN[i] for i =1:21)
@@ -453,11 +545,11 @@ function DMS_score_plmsite(Jmat, plmVar_wt, csv)
     for site =1:plmVar_wt.N
         plmscore[:,site] .= get_proba(Jmat, site, izm, plmVar_wt)
     end
-    dmsplmscores = zeros(nrow(csv))
-    dmsexpscores = zeros(nrow(csv))
-    for mut_id = 1:size(csv)[1]
-        mut = csv[mut_id, 2]
-        screenscore = csv[mut_id, 3]
+    dmsplmscores = zeros(length(fitness))
+    dmsexpscores = zeros(length(fitness))
+    for mut_id = 1:length(fitness)
+        mut = mutations[mut_id]
+        screenscore = fitness[mut_id]
         dmsexpscores[mut_id] =  parse(Float64,replace(screenscore, ","=>"."))
         ina, outa, site = parsemut(mut)
         outa = L2N[outa]
@@ -466,7 +558,7 @@ function DMS_score_plmsite(Jmat, plmVar_wt, csv)
     return plmscore, dmsplmscores, dmsexpscores
 end
 
-function DMS_score_plm(Jmat, plmVar_wt, csv)
+function DMS_score_plm(Jmat, plmVar_wt, mutations, fitness)
     alphabetN = [ 1,   2,   3,   4,   5,   6,   7,   8,   9,   10,  11,  12,  13, 14,  15,  16,  17,  18,  19,  20, 21]
     alphabetL=  ["A", "C", "D", "E", "F", "G", "H", "I", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "V", "W", "Y", "-"]
     L2N =  Dict(alphabetL[i] => alphabetN[i] for i =1:21)
@@ -480,11 +572,11 @@ function DMS_score_plm(Jmat, plmVar_wt, csv)
         wta = plmVar_wt.Z[site,1]
         wtplm+=plmscore[wta, site]
     end
-    dmsplmscores = zeros(nrow(csv))
-    dmsexpscores = zeros(nrow(csv))
-    for mut_id = 1:size(csv)[1]
-        mut = csv[mut_id, 2]
-        screenscore = csv[mut_id, 3]
+    dmsplmscores = zeros(length(fitness))
+    dmsexpscores = zeros(length(fitness))
+    for mut_id = 1:length(fitness)
+        mut = mutations[mut_id]
+        screenscore = fitness[mut_id]
         # println(screenscore)
         dmsexpscores[mut_id] = parse(Float64,replace(screenscore, ","=>"."))
         ina, outa, site = parsemut(mut)
@@ -503,7 +595,7 @@ end
 
 
 
-function DMS_score_plmXprofile(Jmat, profile, plmVar_wt, csv)
+function DMS_score_plmXprofile(Jmat, profile, plmVar_wt, mutations, fitness)
     alphabetN = [ 1,   2,   3,   4,   5,   6,   7,   8,   9,   10,  11,  12,  13, 14,  15,  16,  17,  18,  19,  20, 21]
     alphabetL=  ["A", "C", "D", "E", "F", "G", "H", "I", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "V", "W", "Y", "-"]
     L2N =  Dict(alphabetL[i] => alphabetN[i] for i =1:21)
@@ -517,11 +609,11 @@ function DMS_score_plmXprofile(Jmat, profile, plmVar_wt, csv)
         wta = plmVar_wt.Z[site,1]
         wtprofile+=log(profile[site, wta])
     end
-    dmsplmscores = zeros(nrow(csv))
-    dmsexpscores = zeros(nrow(csv))
-    for mut_id = 1:size(csv)[1]
-        mut = csv[mut_id, 2]
-        screenscore = csv[mut_id, 3]
+    dmsplmscores = zeros(length(fitness))
+    dmsexpscores = zeros(length(fitness))
+    for mut_id = 1:length(fitness)
+        mut = mutations[mut_id]
+        screenscore = fitness[mut_id]
         dmsexpscores[mut_id] = parse(Float64,replace(screenscore, ","=>"."))
         ina, outa, site = parsemut(mut)
         outa = L2N[outa]
@@ -532,17 +624,18 @@ function DMS_score_plmXprofile(Jmat, profile, plmVar_wt, csv)
 end
 
 
-function DMS_score_ardca(ardms, csv)
+
+function DMS_score_ardca(ardms, mutations, fitness)
     alphabetN = [ 1,   2,   3,   4,   5,   6,   7,   8,   9,   10,  11,  12,  13, 14,  15,  16,  17,  18,  19,  20, 21]
     alphabetL=  ["A", "C", "D", "E", "F", "G", "H", "I", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "V", "W", "Y", "-"]
     L2N =  Dict(alphabetL[i] => alphabetN[i] for i =1:21)
     # izm = view(plmVar_wt.IdxZ, :, 1)
 
-    dmsplmscores = zeros(nrow(csv))
-    dmsexpscores = zeros(nrow(csv))
-    for mut_id = 1:size(csv)[1]
-        mut = csv[mut_id, 2]
-        screenscore = csv[mut_id, 3]
+    dmsplmscores = zeros(length(fitness))
+    dmsexpscores = zeros(length(fitness))
+    for mut_id = 1:length(fitness)
+        mut = mutations[mut_id]
+        screenscore = fitness[mut_id]
         dmsexpscores[mut_id] = parse(Float64,replace(screenscore, ","=>"."))
         ina, outa, site = parsemut(mut)
         outa = L2N[outa]
@@ -550,3 +643,32 @@ function DMS_score_ardca(ardms, csv)
     end
     return  dmsplmscores, dmsexpscores
 end
+
+
+
+
+
+
+
+
+
+
+
+# function DMS_score_ardca(ardms, csv)
+#     alphabetN = [ 1,   2,   3,   4,   5,   6,   7,   8,   9,   10,  11,  12,  13, 14,  15,  16,  17,  18,  19,  20, 21]
+#     alphabetL=  ["A", "C", "D", "E", "F", "G", "H", "I", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "V", "W", "Y", "-"]
+#     L2N =  Dict(alphabetL[i] => alphabetN[i] for i =1:21)
+#     # izm = view(plmVar_wt.IdxZ, :, 1)
+#
+#     dmsplmscores = zeros(nrow(csv))
+#     dmsexpscores = zeros(nrow(csv))
+#     for mut_id = 1:size(csv)[1]
+#         mut = csv[mut_id, 2]
+#         screenscore = csv[mut_id, 3]
+#         dmsexpscores[mut_id] = parse(Float64,replace(screenscore, ","=>"."))
+#         ina, outa, site = parsemut(mut)
+#         outa = L2N[outa]
+#         dmsplmscores[mut_id] = ardms[outa, site]
+#     end
+#     return  dmsplmscores, dmsexpscores
+# end

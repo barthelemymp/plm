@@ -38,6 +38,43 @@ function ReadFasta(filename::AbstractString,max_gap_fraction::Real, theta::Any, 
 end
 
 
+
+function read_mutation(file)
+    alphabetN = [ 1,   2,   3,   4,   5,   6,   7,   8,   9,   10,  11,  12,  13, 14,  15,  16,  17,  18,  19,  20, 21]
+    alphabetL=  ['A', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'V', 'W', 'Y', '-']
+    symbol_map =  Dict(alphabetL[i] => alphabetN[i] for i =1:21)
+    data::Array{Any} = readfasta(file)
+    nsequences = length(data)
+    first_sequence::String = data[1][2]
+    sequence_length = length(first_sequence)
+    annotations::Vector{String} = Vector{String}(undef, nsequences)
+    sequences = zeros(Integer, sequence_length, nsequences)
+    for (m, (annotation, sequence)) in enumerate(data)
+        annotations[m] = annotation
+        position = 0
+        for symbol in sequence
+#             !is_mappable(symbol_map, symbol) && continue
+            position += 1
+            sequences[position, m] = symbol_map[symbol]
+        end
+    end
+    return sequences, annotations
+end
+
+function read_fit(path)
+    fitness = []
+    open(path) do f
+    # read till end of file
+        while ! eof(f)
+         # read a new / next line for every iteration
+            s = readline(f)
+            fit = parse(Float64, s)
+            push!(fitness, fit)
+        end
+    end
+    return fitness
+end
+
 function write_fasta_data(filename::String, data)
     println("Writing $(length(data)) entries to file $filename")
 
