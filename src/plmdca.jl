@@ -550,7 +550,7 @@ function DMS_score_plmsite(Jmat,plmVar_wt, mutations, fitness)
     for mut_id = 1:length(fitness)
         mut = mutations[mut_id]
         screenscore = fitness[mut_id]
-        dmsexpscores[mut_id] =  parse(Float64,replace(screenscore, ","=>"."))
+        dmsexpscores[mut_id] = screenscore#  parse(Float64,replace(screenscore, ","=>"."))
         ina, outa, site = parsemut(mut)
         outa = L2N[outa]
         dmsplmscores[mut_id] = plmscore[outa, site]
@@ -578,7 +578,7 @@ function DMS_score_plm(Jmat, plmVar_wt, mutations, fitness)
         mut = mutations[mut_id]
         screenscore = fitness[mut_id]
         # println(screenscore)
-        dmsexpscores[mut_id] = parse(Float64,replace(screenscore, ","=>"."))
+        dmsexpscores[mut_id] = screenscore#parse(Float64,replace(screenscore, ","=>"."))
         ina, outa, site = parsemut(mut)
         outa = L2N[outa]
         wta = plmVar_wt.Z[site,1]
@@ -614,7 +614,7 @@ function DMS_score_plmXprofile(Jmat, profile, plmVar_wt, mutations, fitness)
     for mut_id = 1:length(fitness)
         mut = mutations[mut_id]
         screenscore = fitness[mut_id]
-        dmsexpscores[mut_id] = parse(Float64,replace(screenscore, ","=>"."))
+        dmsexpscores[mut_id] = screenscore#parse(Float64,replace(screenscore, ","=>"."))
         ina, outa, site = parsemut(mut)
         outa = L2N[outa]
         wta = plmVar_wt.Z[site,1]
@@ -636,7 +636,7 @@ function DMS_score_ardca(ardms, mutations, fitness)
     for mut_id = 1:length(fitness)
         mut = mutations[mut_id]
         screenscore = fitness[mut_id]
-        dmsexpscores[mut_id] = parse(Float64,replace(screenscore, ","=>"."))
+        dmsexpscores[mut_id] = screenscore#parse(Float64,replace(screenscore, ","=>"."))
         ina, outa, site = parsemut(mut)
         outa = L2N[outa]
         dmsplmscores[mut_id] = ardms[outa, site]
