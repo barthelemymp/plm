@@ -43,9 +43,9 @@ for famname in ["BRCA1","B3VI55T","BF520","AMIE","BRCA1BRCT","CALM1","DLG4","HG"
     mutationpath =  datadir * famname*"/"*famname*"_mutants_exp.fasta"
     fitnesspath =  datadir * famname*"/"*famname*"_mutants_exp.fit"
     sequences, mutations = read_mutation(mutationpath)
-    mutations = mutations[2:]
+    mutations = mutations[2:end]
     fitness = read_fit(fitnesspath)
-    fitness = fitness[2:]
+    fitness = fitness[2:end]
     time = @elapsed W, Z, N, M, q = ReadFasta(alipath, max_gap_fraction, theta, remove_dups)
 # if generative
     # lambdaJ = 0.0001
