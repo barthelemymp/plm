@@ -33,7 +33,7 @@ remove_dups=true
 
 
 
-# 
+#
 # # multss = []
 # for famname in ["BRCA1","B3VI55T","BF520","AMIE","BRCA1BRCT","CALM1","DLG4","HG"]#"BLAT"
 #     global indi+=1
@@ -87,8 +87,8 @@ remove_dups=true
 
 
 
-@show indi, famname
-push!(xs,indi)
+# @show indi, famname
+# push!(xs,indi)
 datadir = "/Data/barth/Jax_integrated_plm/data/"
 alipath = datadir* "VIM-NDM-alignment_hmmstruct_symfrac03_on_B1cdhit100_frac075colgaps_max22gaps_noclose.fasta"
 wtpath =  datadir * "VIM_wt.fasta"
