@@ -1,26 +1,20 @@
 
-
 using JLD: save, load
 #cd("C:\\Users\\bartm\\Documents\\These\\plm\\test")
 cd("/Data/barth/plm/test")
 push!(LOAD_PATH, joinpath(pwd(), "../src"))
-#cd("/home/meynard/Documents/robustalignment")
-# cd("/home/bart/Documents/replicated_boltzmann/test")
-push!(LOAD_PATH, joinpath(pwd(), "src"))
-# using RobustAlignment
+using Revise
 using plm
-using Plots
-using JLD: save, load
-using Random
-using FastaIO: writefasta, readfasta
-using PlmDCA
-using PdbTool
-using Distributed
-using StatsBase
-using Distributions
+using Statistics
+using CSV
 using ArDCA
-using ExtractMacro: @extract
-using DCAUtils
+using ArgParse
+using Plots
+using DataFrames
+using CSV
+using NPZ
+using StatsBase
+using Plots
 using Base.Threads: @threads, nthreads
 
 
