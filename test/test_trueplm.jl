@@ -1,16 +1,14 @@
 
+
 using JLD: save, load
-
-cd("/home/bart/Documents/replicated_boltzmann/test")
-
+#cd("C:\\Users\\bartm\\Documents\\These\\plm\\test")
+cd("/Data/barth/plm/test")
 push!(LOAD_PATH, joinpath(pwd(), "../src"))
-using Revise
-using ReplicatedBoltzmann
-cd("/home/bart/Documents/robustalignment")
 #cd("/home/meynard/Documents/robustalignment")
 # cd("/home/bart/Documents/replicated_boltzmann/test")
 push!(LOAD_PATH, joinpath(pwd(), "src"))
-using RobustAlignment
+# using RobustAlignment
+using plm
 using Plots
 using JLD: save, load
 using Random
