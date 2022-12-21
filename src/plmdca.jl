@@ -95,6 +95,28 @@ function inflate_matrix(J::Array{Float64,3},N)
     return Jt
 end
 
+
+
+function symetrize_matrix(Jmat, q)
+    LL, N = size(Jmat)
+    Jmat2 = copy(Jmat)
+    for i in 1:N
+        for j in 1:i-1
+            for a in 1:q 
+                for b in 1:q 
+                    Jmat2[(j-1)*q*q +q*(a-1) +b ,i] = Jmat[(i-1)*q*q +q*(b-1) +a ,j]
+                end
+            end
+        end
+    end
+    Jsym = (Jmat + Jmat2)./2
+    return Jsym
+end
+
+
+
+
+end
 function correct_APC(S::Matrix)
     N = size(S, 1)
     Si = sum(S, dims=1)
@@ -672,3 +694,32 @@ end
 #     end
 #     return  dmsplmscores, dmsexpscores
 # end
+
+
+
+
+
+function DMS_site_score_plmsite(Jmat,plmVar_wt, mutations, fitness)
+    alphabetN = [ 1,   2,   3,   4,   5,   6,   7,   8,   9,   10,  11,  12,  13, 14,  15,  16,  17,  18,  19,  20, 21]
+    alphabetL=  ["A", "C", "D", "E", "F", "G", "H", "I", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "V", "W", "Y", "-"]
+    L2N =  Dict(alphabetL[i] => alphabetN[i] for i =1:21)
+    izm = view(plmVar_wt.IdxZ, :, 1)
+    plmscore = zeros(plmVar_wt.q, plmVar_wt.N)
+    for site =1:plmVar_wt.N
+        plmscore[:,site] .= get_proba(Jmat, site, izm, plmVar_wt)
+    end
+
+    dmsplmscores =  [[] for i=1:plmVar_wt.N]
+    dmsexpscores = [[] for i=1:plmVar_wt.N]
+    for mut_id = 1:length(fitness)
+        mut = mutations[mut_id]
+        screenscore = fitness[mut_id]
+        #  parse(Float64,replace(screenscore, ","=>"."))
+        ina, outa, site = parsemut(mut)
+        push!(dmsexpscores[site], screenscore)
+        outa = L2N[outa]
+        # dmsplmscores[mut_id] = plmscore[outa, site]
+        push!(dmsplmscores[site], plmscore[outa, site])
+    end
+    return plmscore, dmsplmscores, dmsexpscores
+end
