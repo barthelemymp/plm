@@ -104,7 +104,14 @@ function symetrize_matrix(Jmat, q)
         for j in 1:i-1
             for a in 1:q 
                 for b in 1:q 
-                    Jmat2[(j-1)*q*q +q*(a-1) +b ,i] = Jmat[(i-1)*q*q +q*(b-1) +a ,j]
+                    Jmat2[(j-1)*q*q+q*(a-1)+b,i] = Jmat[-q*q+(i-1)*q*q+q*(b-1)+a,j]
+                end
+            end
+        end
+        for j in i+1:N
+            for a in 1:q 
+                for b in 1:q 
+                    Jmat2[-q*q+q*q+(j-1)*q*q+q*(a-1)+b,i] = Jmat[(i-1)*q*q+q*(b-1)+a,j]
                 end
             end
         end
