@@ -121,9 +121,6 @@ function symetrize_matrix(Jmat, q)
 end
 
 
-
-
-end
 function correct_APC(S::Matrix)
     N = size(S, 1)
     Si = sum(S, dims=1)
