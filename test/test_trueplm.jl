@@ -89,7 +89,7 @@ for famname in ["AMIE","B3VI55T","BF520","BRCA1","BRCA1BRCT","CALM1","DLG4","HG"
 
 
 
-    mult = multss[i]
+    mult = 2#multss[i]
     plmvarSample = PlmVar(N, M*mult, q, q * q, lambdaJ, lambdaH, transpose(repeat(transpose(Z),mult)), repeat(W,mult))
     corr_list2 = []
     x_list2 = []
