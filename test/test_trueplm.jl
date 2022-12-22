@@ -94,8 +94,11 @@ for famname in ["AMIE","B3VI55T","BF520","BRCA1","BRCA1BRCT","CALM1","DLG4","HG"
     corr_list2 = []
     x_list2 = []
     for s =0:1500
+        @show "giibs in"
         gibbsstep(plmo, plmvarSample)
+        @show "gibbs out"
         if s%25==0
+            @show "ëvalin"
             Pi_s, Pij_s, _, _ = compute_weighted_frequencies(convert(Array{Int8,2}, plmvarSample.Z), plmvarSample.q, 0)
             corrij_s = corrCIJ(Pi_s, Pij_s, N)
             corrij_true = corrCIJ(Pi_true, Pij_true, N)
