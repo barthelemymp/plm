@@ -35,7 +35,7 @@ using Plots
 global indi = 0
 plt = plot(title="Mutation spearman correlation")
 xticks = (1:9, ["AMIE","B3VI55T","BF520","BRCA1","BRCA1BRCT","CALM1","DLG4","HG"])
-
+nchains = 50000
 spplm_list = []
 spplm_full_list = []
 spplmprof_list = []
@@ -90,14 +90,16 @@ for famname in ["AMIE","B3VI55T","BF520","BRCA1","BRCA1BRCT","CALM1","DLG4","HG"
 
 
     mult = 2#multss[i]
-    plmvarSample = PlmVar(N, M*mult, q, q * q, lambdaJ, lambdaH, transpose(repeat(transpose(Z),mult)), repeat(W,mult))
+    # plmvarSample = PlmVar(N, M*mult, q, q * q, lambdaJ, lambdaH, transpose(repeat(transpose(Z),mult)), repeat(W,mult))
+
+    plmvarSample = PlmVar(N, nchains, q, q * q, lambdaJ, lambdaH, nes(size(Z)[1], nchains), ones(nchains))
     corr_list2 = []
     x_list2 = []
-    for s =0:1500
+    for s =0:2000
         @show "giibs in"
         gibbsstep(plmo, plmvarSample)
         @show "gibbs out"
-        if s%25==0
+        if s%50==0
             @show "ëvalin"
             Pi_s, Pij_s, _, _ = compute_weighted_frequencies(convert(Array{Int8,2}, plmvarSample.Z), plmvarSample.q, 0)
             corrij_s = corrCIJ(Pi_s, Pij_s, N)
@@ -107,10 +109,10 @@ for famname in ["AMIE","B3VI55T","BF520","BRCA1","BRCA1BRCT","CALM1","DLG4","HG"
             push!(x_list2, s)
         end
     end
-    pis, pijs = expandP(Pi_s, Pij_s,N)
+
     plt = plot(title="$famname corr for lh $(lambdaH) lj $(lambdaJ)",margins = 5Plots.mm)
     ylims!((0.0,1.0))
-    xlims!((0,1500))
+    xlims!((0,2000))
     plot!(plt,x_list, corr_list, label="Gap Init")
     plot!(plt,x_list2, corr_list2, label="Data Init")
     xlabel!(plt, "gibsteps")
@@ -141,13 +143,13 @@ for famname in ["AMIE","B3VI55T","BF520","BRCA1","BRCA1BRCT","CALM1","DLG4","HG"
 
 
 
-    plmvarSample = PlmVar(N, M*mult, q, q * q, lambdaJ, lambdaH, transpose(repeat(transpose(Z),mult)), repeat(W,mult))
+    plmvarSample = PlmVar(N, nchains, q, q * q, lambdaJ, lambdaH, nes(size(Z)[1], nchains), ones(nchains))
     corr_list2 = []
     x_list2 = []
     plmo2 = symetrize_matrix(plmo, q)
-    for s =0:1500
+    for s =0:2000
         gibbsstep(plmo2, plmvarSample)
-        if s%25==0
+        if s%50==0
             Pi_s, Pij_s, _, _ = compute_weighted_frequencies(convert(Array{Int8,2}, plmvarSample.Z), plmvarSample.q, 0)
             corrij_s = corrCIJ(Pi_s, Pij_s, N)
             corrij_true = corrCIJ(Pi_true, Pij_true, N)
@@ -159,7 +161,7 @@ for famname in ["AMIE","B3VI55T","BF520","BRCA1","BRCA1BRCT","CALM1","DLG4","HG"
     pis, pijs = expandP(Pi_s, Pij_s,N)
     plt = plot(title="$famname corr for lh $(lambdaH) lj $(lambdaJ)",margins = 5Plots.mm)
     ylims!((0.0,1.0))
-    xlims!((0,1500))
+    xlims!((0,2000))
     plot!(plt,x_list, corr_list, label="Gap Init")
     plot!(plt,x_list2, corr_list2, label="Data Init")
     xlabel!(plt, "gibsteps")
