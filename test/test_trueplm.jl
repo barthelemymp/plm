@@ -92,7 +92,7 @@ for famname in ["AMIE","B3VI55T","BF520","BRCA1","BRCA1BRCT","CALM1","DLG4","HG"
     mult = 2#multss[i]
     # plmvarSample = PlmVar(N, M*mult, q, q * q, lambdaJ, lambdaH, transpose(repeat(transpose(Z),mult)), repeat(W,mult))
 
-    plmvarSample = PlmVar(N, nchains, q, q * q, lambdaJ, lambdaH, nes(size(Z)[1], nchains), ones(nchains))
+    plmvarSample = PlmVar(N, nchains, q, q * q, lambdaJ, lambdaH, ones(size(Z)[1], nchains), ones(nchains))
     corr_list2 = []
     x_list2 = []
     for s =0:2000
@@ -143,7 +143,7 @@ for famname in ["AMIE","B3VI55T","BF520","BRCA1","BRCA1BRCT","CALM1","DLG4","HG"
 
 
 
-    plmvarSample = PlmVar(N, nchains, q, q * q, lambdaJ, lambdaH, nes(size(Z)[1], nchains), ones(nchains))
+    plmvarSample = PlmVar(N, nchains, q, q * q, lambdaJ, lambdaH, ones(size(Z)[1], nchains), ones(nchains))
     corr_list2 = []
     x_list2 = []
     plmo2 = symetrize_matrix(plmo, q)
