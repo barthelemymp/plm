@@ -97,7 +97,7 @@ for famname in ["AMIE","B3VI55T","BF520","BRCA1","BRCA1BRCT","CALM1","DLG4","HG"
     x_list = []
     for s =0:2000
         gibbsstep(plmo, plmvarSample)
-        if s%50==0
+        if s%100==0
             @show "ëvalin"
             Pi_s, Pij_s, _, _ = compute_weighted_frequencies(convert(Array{Int8,2}, plmvarSample.Z), plmvarSample.q, 0)
             corrij_s = corrCIJ(Pi_s, Pij_s, N)
@@ -159,7 +159,7 @@ for famname in ["AMIE","B3VI55T","BF520","BRCA1","BRCA1BRCT","CALM1","DLG4","HG"
     plmo2 = symetrize_matrix(plmo, q)
     for s =0:2000
         gibbsstep(plmo2, plmvarSample)
-        if s%50==0
+        if s%100==0
             Pi_s, Pij_s, _, _ = compute_weighted_frequencies(convert(Array{Int8,2}, plmvarSample.Z), plmvarSample.q, 0)
             corrij_s = corrCIJ(Pi_s, Pij_s, N)
             corrij_true = corrCIJ(Pi_true, Pij_true, N)
