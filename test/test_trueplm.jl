@@ -114,7 +114,7 @@ for famname in ["AMIE","B3VI55T","BF520","BRCA1","BRCA1BRCT","CALM1","DLG4","HG"
     corrij_true = corrCIJ(Pi_true, Pij_true, N)
 
     plt2 = plot(title="$famname corr for lh $(lambdaH) lj $(lambdaJ)",margins = 5Plots.mm)
-    scatter!(plt2, vex(corrij_true), vec(corrij_s))
+    scatter!(plt2, vec(corrij_true), vec(corrij_s))
     xlabel!(plt2, "2pt corr True")
     ylabel!(plt2, "2pt corr Sample")
     savefig(plt2, "../../$(famname)corrScatter_lh$(lambdaH)_lj$(lambdaJ)_asym.png")
@@ -179,7 +179,7 @@ for famname in ["AMIE","B3VI55T","BF520","BRCA1","BRCA1BRCT","CALM1","DLG4","HG"
     savefig(plt, "../../$(famname)corr_lh$(lambdaH)_lj$(lambdaJ)_asymvssym.png")
 
     plt2 = plot(title="$famname corr for lh $(lambdaH) lj $(lambdaJ)",margins = 5Plots.mm)
-    scatter!(plt2, vex(corrij_true), vec(corrij_s))
+    scatter!(plt2, vec(corrij_true), vec(corrij_s))
     xlabel!(plt2, "2pt corr True")
     ylabel!(plt2, "2pt corr Sample")
     savefig(plt2, "../../$(famname)corrScatter_lh$(lambdaH)_lj$(lambdaJ)_sym.png")
