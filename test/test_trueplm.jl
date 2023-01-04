@@ -42,7 +42,7 @@ spplmprof_list = []
 spardca_list = []
 xs = []
 
-startposlist = dict("AMIE"=>1,"B3VI55T"=>1,"BF520"=>25,"BRCA1"=>1,"BRCA1BRCT"=>1625,"CALM1"=>1,"DLG4"=>300,"HG" =>1) 
+startposlist = Dict("AMIE"=>1,"B3VI55T"=>1,"BF520"=>25,"BRCA1"=>1,"BRCA1BRCT"=>1625,"CALM1"=>1,"DLG4"=>300,"HG" =>1) 
 multss = []
 for famname in ["BRCA1BRCT","CALM1","VIM","DLG4","AMIE","B3VI55T","BF520","HG", "BRCA1"]#"BLAT"
     global indi+=1
