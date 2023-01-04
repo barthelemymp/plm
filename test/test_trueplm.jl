@@ -34,31 +34,32 @@ using StatsBase
 using Plots
 global indi = 0
 plt = plot(title="Mutation spearman correlation")
-xticks = (1:9, ["AMIE","B3VI55T","BF520","BRCA1","BRCA1BRCT","CALM1","DLG4","HG"])
+xticks = (1:9, ["BRCA1","BRCA1BRCT","CALM1","DLG4","AMIE","B3VI55T","BF520","HG"])
 nchains = 50000
 spplm_list = []
 spplm_full_list = []
 spplmprof_list = []
 spardca_list = []
 xs = []
-startposlist = [1     ,1         ,25    ,1      ,1625       ,1      ,300   ,1]
+
+startposlist = dict("AMIE"=>1,"B3VI55T"=>1,"BF520"=>25,"BRCA1"=>1,"BRCA1BRCT"=>1625,"CALM1"=>1,"DLG4"=>300,"HG" =>1) 
 multss = []
-for famname in ["BRCA1","BRCA1BRCT","CALM1","DLG4","AMIE","B3VI55T","BF520","HG"]#"BLAT"
+for famname in ["BRCA1BRCT","CALM1","VIM","DLG4","AMIE","B3VI55T","BF520","HG", "BRCA1"]#"BLAT"
     global indi+=1
-    startpos = startposlist[indi]
+    # startpos = startposlist[famname]#startposlist[indi]
     @show indi, famname
     push!(xs,indi)
     datadir = "/Data/barth/mutdata/"
     alipath = datadir* famname*"/"*"ali"*famname*"_clean.fasta"
     # "../plm/data/CALM/aliCALM1_clean.fasta"
-    wtpath =  datadir * famname*"/"*famname*"_clean.fasta"
-    # "../plm/data/CALM/CALM1_clean.fasta"
-    mutationpath =  datadir * famname*"/"*"exp"*famname*"_clean.csv"
-    # "../plm/data/CALM/Roth2017.csv"
-    maskpath = datadir * famname*"/"* famname*"mask.npz.npy"
-    # "../plm/data/calm1mask.npz.npy"
-    csv = DataFrame(CSV.File(mutationpath, delim=";"))
-    processCSV(csv, maskpath, startpos)
+    # wtpath =  datadir * famname*"/"*famname*"_clean.fasta"
+    # # "../plm/data/CALM/CALM1_clean.fasta"
+    # mutationpath =  datadir * famname*"/"*"exp"*famname*"_clean.csv"
+    # # "../plm/data/CALM/Roth2017.csv"
+    # maskpath = datadir * famname*"/"* famname*"mask.npz.npy"
+    # # "../plm/data/calm1mask.npz.npy"
+    # csv = DataFrame(CSV.File(mutationpath, delim=";"))
+    # processCSV(csv, maskpath, startpos)
 
     theta=:auto
     max_gap_fraction=0.9
@@ -91,7 +92,7 @@ for famname in ["BRCA1","BRCA1BRCT","CALM1","DLG4","AMIE","B3VI55T","BF520","HG"
 
 
 
-    mult = 2#multss[i]
+    # mult = 2 #multss[i]
     # plmvarSample = PlmVar(N, M*mult, q, q * q, lambdaJ, lambdaH, transpose(repeat(transpose(Z),mult)), repeat(W,mult))
 
     plmvarSample = PlmVar(N, nchains, q, q * q, lambdaJ, lambdaH, ones(size(Z)[1], nchains), ones(nchains))
@@ -236,3 +237,4 @@ scatter!(plt, xs,spardca_list, label="ardca")
 xticks!(plt, xticks)
 
 savefig(plt, "../../mut.png")
+
