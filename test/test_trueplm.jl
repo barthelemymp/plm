@@ -43,7 +43,7 @@ spardca_list = []
 xs = []
 startposlist = [1     ,1         ,25    ,1      ,1625       ,1      ,300   ,1]
 multss = []
-for famname in ["AMIE","B3VI55T","BF520","BRCA1","BRCA1BRCT","CALM1","DLG4","HG"]#"BLAT"
+for famname in ["BRCA1","BRCA1BRCT","CALM1","DLG4","AMIE","B3VI55T","BF520","HG"]#"BLAT"
     global indi+=1
     startpos = startposlist[indi]
     @show indi, famname
@@ -84,6 +84,8 @@ for famname in ["AMIE","B3VI55T","BF520","BRCA1","BRCA1BRCT","CALM1","DLG4","HG"
 
     
     plmo = plmdca_asym2(joinpath(pwd(), alipath), theta = :auto,verbose=false, lambdaJ=lambdaJ,lambdaH=lambdaH)
+    plmo2 = symetrize_matrix(plmo, q)
+    
     #Pi_true, Pij_true, _, _ = compute_weighted_frequencies(convert(Array{Int8,2}, plmvar.Z), plmvarSample.q, :auto)
     pitrue, pijtrue = expandP(Pi_true, Pij_true,N)
 
@@ -156,7 +158,7 @@ for famname in ["AMIE","B3VI55T","BF520","BRCA1","BRCA1BRCT","CALM1","DLG4","HG"
     plmvarSample = PlmVar(N, nchains, q, q * q, lambdaJ, lambdaH, ones(size(Z)[1], nchains), ones(nchains))
     corr_list2 = []
     x_list2 = []
-    plmo2 = symetrize_matrix(plmo, q)
+    
     for s =0:2000
         gibbsstep(plmo2, plmvarSample)
         if s%100==0
