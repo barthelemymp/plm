@@ -44,7 +44,7 @@ xs = []
 
 startposlist = Dict("AMIE"=>1,"B3VI55T"=>1,"BF520"=>25,"BRCA1"=>1,"BRCA1BRCT"=>1625,"CALM1"=>1,"DLG4"=>300,"HG" =>1) 
 multss = []
-for famname in ["BRCA1BRCT","CALM1","VIM","DLG4","AMIE","B3VI55T","BF520","HG", "BRCA1"]#"BLAT"
+for famname in [ "BRCA1", "BRCA1BRCT","CALM1","VIM","DLG4","AMIE","B3VI55T","BF520","HG"]#"BLAT"
     global indi+=1
     # startpos = startposlist[famname]#startposlist[indi]
     @show indi, famname
@@ -94,8 +94,11 @@ for famname in ["BRCA1BRCT","CALM1","VIM","DLG4","AMIE","B3VI55T","BF520","HG", 
 
     # mult = 2 #multss[i]
     # plmvarSample = PlmVar(N, M*mult, q, q * q, lambdaJ, lambdaH, transpose(repeat(transpose(Z),mult)), repeat(W,mult))
+    mult = floor(Int,nchains/M)+1
+    plmvarSample = PlmVar(N, nchains, q, q * q, lambdaJ, lambdaH, transpose(repeat(transpose(Z),mult))[:,1:nchains], ones(nchains))
 
-    plmvarSample = PlmVar(N, nchains, q, q * q, lambdaJ, lambdaH, ones(size(Z)[1], nchains), ones(nchains))
+
+    # plmvarSample = PlmVar(N, nchains, q, q * q, lambdaJ, lambdaH, ones(size(Z)[1], nchains), ones(nchains))
     corr_list = []
     x_list = []
     for s =0:2000
@@ -120,7 +123,7 @@ for famname in ["BRCA1BRCT","CALM1","VIM","DLG4","AMIE","B3VI55T","BF520","HG", 
     scatter!(plt2, vec(corrij_true), vec(corrij_s))
     xlabel!(plt2, "2pt corr True")
     ylabel!(plt2, "2pt corr Sample")
-    savefig(plt2, "../../$(famname)corrScatter_lh$(lambdaH)_lj$(lambdaJ)_asym.png")
+    savefig(plt2, "../../$(famname)corrScatter_lh$(lambdaH)_lj$(lambdaJ)_asym_dinit.png")
 
 
     # plt = plot(title="$famname corr for lh $(lambdaH) lj $(lambdaJ)",margins = 5Plots.mm)
@@ -156,7 +159,9 @@ for famname in ["BRCA1BRCT","CALM1","VIM","DLG4","AMIE","B3VI55T","BF520","HG", 
 
 
 
-    plmvarSample = PlmVar(N, nchains, q, q * q, lambdaJ, lambdaH, ones(size(Z)[1], nchains), ones(nchains))
+    # plmvarSample = PlmVar(N, nchains, q, q * q, lambdaJ, lambdaH, ones(size(Z)[1], nchains), ones(nchains))
+    plmvarSample = PlmVar(N, nchains, q, q * q, lambdaJ, lambdaH, transpose(repeat(transpose(Z),mult))[:,1:nchains], ones(nchains))
+
     corr_list2 = []
     x_list2 = []
     
@@ -179,13 +184,13 @@ for famname in ["BRCA1BRCT","CALM1","VIM","DLG4","AMIE","B3VI55T","BF520","HG", 
     plot!(plt,x_list2, corr_list2, label="sym")
     xlabel!(plt, "gibsteps")
     ylabel!(plt, "2pt correlation")
-    savefig(plt, "../../$(famname)corr_lh$(lambdaH)_lj$(lambdaJ)_asymvssym.png")
+    savefig(plt, "../../$(famname)corr_lh$(lambdaH)_lj$(lambdaJ)_asymvssym_dinit.png")
 
     plt2 = plot(title="$famname corr for lh $(lambdaH) lj $(lambdaJ)",margins = 5Plots.mm)
     scatter!(plt2, vec(corrij_true), vec(corrij_s))
     xlabel!(plt2, "2pt corr True")
     ylabel!(plt2, "2pt corr Sample")
-    savefig(plt2, "../../$(famname)corrScatter_lh$(lambdaH)_lj$(lambdaJ)_sym.png")
+    savefig(plt2, "../../$(famname)corrScatter_lh$(lambdaH)_lj$(lambdaJ)_sym_dinit.png")
 
     # plt3 = plot(title="$famname pij for lh $(lambdaH) lj $(lambdaJ)",margins = 5Plots.mm)
     # scatter!(plt2, vex(pitrue), vec(pis))
@@ -230,11 +235,11 @@ for famname in ["BRCA1BRCT","CALM1","VIM","DLG4","AMIE","B3VI55T","BF520","HG", 
     # @show spplm, spplmprof, spardca
 end
 
-scatter!(plt, xs,spplm_list, label="cond_plm")
-scatter!(plt, xs,spplm_full_list, label="plm")
-scatter!(plt, xs,spplmprof_list, label="plm profile rebalanced")
-scatter!(plt, xs,spardca_list, label="ardca")
-xticks!(plt, xticks)
+# scatter!(plt, xs,spplm_list, label="cond_plm")
+# scatter!(plt, xs,spplm_full_list, label="plm")
+# scatter!(plt, xs,spplmprof_list, label="plm profile rebalanced")
+# scatter!(plt, xs,spardca_list, label="ardca")
+# xticks!(plt, xticks)
 
-savefig(plt, "../../mut.png")
+# savefig(plt, "../../mut.png")
 
